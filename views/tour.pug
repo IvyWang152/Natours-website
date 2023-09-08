@@ -1,6 +1,14 @@
-extends base
+extends base    
 
 include _reviewCard
+
+block append head 
+  //-script(src='/js/mapbox.js')
+  //- link(rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="")
+  //- script(src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="")
+  link(rel="stylesheet" href="/css/leaflet.css")
+  script(src="/js/leaflet.js")
+  
 
 
 
@@ -62,7 +70,7 @@ block content
     .description-box
       h2.heading-secondary.ma-bt-lg=`About ${tour.name} tour`
 
-      - const paragraphs = tour.description.split('\n');
+      - const paragraphs = tour.description.split('\n'); //array
       each p in paragraphs 
         p.description_text=p
 
@@ -72,7 +80,7 @@ block content
         img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i+1}`,class=`picture-box__img--${i+1}`)
 
   section.section-map
-    #map
+    #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
   section.section-reviews
     .reviews
@@ -91,3 +99,4 @@ block content
         h2.heading-secondary What are you waiting for?
         p.cta__text=`${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
         button.btn.btn--green.span-all-rows Book tour now!
+

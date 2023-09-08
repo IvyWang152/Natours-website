@@ -24,7 +24,22 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //SET SECURITY HTTP HEADERS
-app.use(helmet());
+// app.use(helmet());
+app.use(helmet({
+  crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: {
+            allowOrigins: ['*']
+        },
+  contentSecurityPolicy: {
+    
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "img-src": ["'self'", "data:", "*.tile.openstreetmap.org", "unpkg.com"],
+      "script-src": ["'self'", "unpkg.com", "'unsafe-inline'"],
+      //"script-src": ["'self'", "https://unpkg.com"],
+    },
+  },
+}));
 
 //DEVELOPMENT LOGGING
 if (process.env.NODE_ENV === 'development') {
